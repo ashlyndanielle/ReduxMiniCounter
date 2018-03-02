@@ -1,49 +1,55 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+
+import { increment, decrement, undo, redo } from './ducks/counter';
+
 import "./App.css";
 
 class App extends Component {
   render() {
+    const { increment, decrement, currentValue, undo, redo } = this.props;
+
     return (
       <div className="app">
         <section className="counter">
-          <h1 className="counter__current-value">{ 0 }</h1>
+          <h1 className="counter__current-value">{ currentValue }</h1>
           <div className="counter__button-wrapper">
             <button
               className="counter__button increment-one"
-              onClick={ () => null }
+              onClick={ () => increment(1) }
             >
               +1
             </button>
             <button
               className="counter__button increment-five"
-              onClick={ () => null }
+              onClick={ () => increment(5) }
             >
               +5
             </button>
             <button
               className="counter__button decrement-one"
-              onClick={ () => null }
+              onClick={ () => decrement(1) }
             >
               -1
             </button>
             <button
               className="counter__button decrement-five"
-              onClick={ () => null }
+              onClick={ () => decrement(5) }
             >
               -5
             </button>
             <br />
             <button
               className="counter__button undo"
-              disabled={ true }
-              onClick={ () => null }
+              disabled={ false }
+              onClick={ () => undo() }
             >
               Undo
             </button>
             <button
               className="counter__button redo"
-              disabled={ true }
-              onClick={ () => null }
+              disabled={ false }
+              onClick={ () => redo() }
             >
               Redo
             </button>
@@ -59,4 +65,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return state;
+}
+
+export default connect(mapStateToProps, { increment, decrement, undo, redo })(App);
